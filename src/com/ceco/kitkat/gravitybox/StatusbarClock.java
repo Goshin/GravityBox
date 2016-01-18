@@ -180,7 +180,13 @@ public class StatusbarClock implements IconManagerListener, BroadcastSubReceiver
                     sb.setSpan(new RelativeSizeSpan(mDowSize), 0, dow.length() + date.length(), 
                             Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
                     if (amPmIndex > -1) {
-                        int offset = Character.isWhitespace(clockText.charAt(dow.length() + date.length() + amPmIndex - 1)) ?
+                        int separatorIndex = dow.length() + date.length();
+                        if (amPmIndex == 0) {
+                            separatorIndex += amPm.length();
+                        } else {
+                            separatorIndex += amPmIndex - 1;
+                        }
+                        int offset = Character.isWhitespace(clockText.charAt(separatorIndex)) ?
                                 1 : 0;
                         sb.setSpan(new RelativeSizeSpan(mAmPmSize), dow.length() + date.length() + amPmIndex - offset, 
                                 dow.length() + date.length() + amPmIndex + amPm.length(), 
